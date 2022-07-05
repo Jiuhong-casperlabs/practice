@@ -1,0 +1,15 @@
+casper-client put-deploy --chain-name casper-net-1 \
+-n http://localhost:11101/rpc \
+--session-path contract/target/wasm32-unknown-unknown/release/dictionary.wasm \
+--secret-key /home/jh/casper-node/utils/nctl/assets/net-1/faucet/secret_key.pem \
+--payment-amount 100000000000
+
+hash-5c093ac5ff81759d9a6f04ed3439787a1138505d8ca4b12775dcd2d402b7a95d -> old
+hash-9e6b3c971cccf41cf9f571f787365c57202693c7643a14e555e8458ac0129968 -> new
+
+casper-client put-deploy --chain-name casper-net-1 \
+-n http://localhost:11101/rpc \
+--session-hash hash-9e6b3c971cccf41cf9f571f787365c57202693c7643a14e555e8458ac0129968 \
+--session-entry-point invalid_put_dictionary_item_key \
+--secret-key /home/jh/casper-node/utils/nctl/assets/net-1/faucet/secret_key.pem \
+--payment-amount 100000000000
