@@ -66,52 +66,26 @@ mod tests {
         let mut builder = InMemoryWasmTestBuilder::default();
         builder.run_genesis(&run_genesis_request).commit();
 
-    
-
         // deploy the contract.
         builder.exec(execute_request).commit().expect_success();
 
         // make assertions
         let a = "orld".as_bytes();
-        println!("a is {:?}",a);
+        println!("a is {:?}", a);
 
         // some bytes, in a vector
-let sparkle_heart = vec![0, 159, 146, 150];
-// let sparkle_heart = vec![240, 159, 146, 150];
-// We know these bytes are valid, so just use `unwrap()`.
-let sparkle_heart = std::str::from_utf8(&sparkle_heart).unwrap();
-println!("sparkle_heart is {}", sparkle_heart);
+        // let sparkle_heart = vec![0, 159, 146, 150];
+        let sparkle_heart = vec![240, 159, 146, 150];
+        // We know these bytes are valid, so just use `unwrap()`.
+        let sparkle_heart = std::str::from_utf8(&sparkle_heart).unwrap();
+        println!("sparkle_heart is {}", sparkle_heart);
 
-use std::mem::MaybeUninit;
+        use std::mem::MaybeUninit;
 
-let mut x = MaybeUninit::<usize>::uninit();
-x.write(123);
-let x_init = unsafe { x.assume_init() };
-assert_eq!(x_init, 123);
-
-    }
-
-    #[test]
-    fn should_error_on_missing_runtime_arg() {
-        let secret_key = SecretKey::ed25519_from_bytes(MY_ACCOUNT).unwrap();
-        let public_key = PublicKey::from(&secret_key);
-        let account_addr = AccountHash::from(&public_key);
-
-        let session_code = PathBuf::from(CONTRACT_WASM);
-        let session_args = RuntimeArgs::new();
-
-        let deploy_item = DeployItemBuilder::new()
-            .with_empty_payment_bytes(runtime_args! {ARG_AMOUNT => *DEFAULT_PAYMENT})
-            .with_authorization_keys(&[account_addr])
-            .with_address(*DEFAULT_ACCOUNT_ADDR)
-            .with_session_code(session_code, session_args)
-            .build();
-
-        let execute_request = ExecuteRequestBuilder::from_deploy_item(deploy_item).build();
-
-        let mut builder = InMemoryWasmTestBuilder::default();
-        builder.run_genesis(&DEFAULT_RUN_GENESIS_REQUEST).commit();
-        builder.exec(execute_request).commit().expect_failure();
+        let mut x = MaybeUninit::<usize>::uninit();
+        x.write(123);
+        let x_init = unsafe { x.assume_init() };
+        assert_eq!(x_init, 123);
     }
 }
 
